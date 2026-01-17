@@ -1,0 +1,17 @@
+{
+  "name": "TCG Cards Maker",
+  "short_name": "TCG Maker",
+  "description": "Creador de cartas para TCG",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "image.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
