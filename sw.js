@@ -4,11 +4,11 @@ const ASSETS = [
   "./index.html",
   "./manifest.json",
   "./image.png",
+  "./matrixregularsmallcaps.ttf", 
   "https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
 ];
 
-// Instalación del Service Worker
 self.addEventListener("install", e => {
   self.skipWaiting();
 });
@@ -20,7 +20,6 @@ self.addEventListener("install", e => {
   );
 });
 
-// Activación y limpieza de cachés viejos
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keys) => {
@@ -33,7 +32,6 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-// Estrategia: Cache First (Responder desde caché, si no existe, ir a internet)
 self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then((res) => {
