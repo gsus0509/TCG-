@@ -4,7 +4,7 @@ const ASSETS = [
   "./index.html",
   "./manifest.json",
   "./image.png",
-  "./html-to-imagen.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
   "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
   "https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Times+New+Roman&display=swap"
 ];
