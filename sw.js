@@ -1,4 +1,4 @@
-const CACHE_NAME = "tcg-maker-v4";
+const CACHE_NAME = "tcg-maker-pro-v5"; 
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,13 +6,13 @@ const ASSETS = [
   "./image.png",
   "./html-to-imagen.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
-  ];
+  "https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Times+New+Roman&display=swap"
+];
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Descargando archivos para modo offline...");
       return cache.addAll(ASSETS);
     })
   );
@@ -35,15 +35,18 @@ self.addEventListener("fetch", (e) => {
   if (!e.request.url.startsWith('http')) return;
 
   e.respondWith(
-    caches.match(e.request).then((res) => {
-      return res || fetch(e.request).then((fetchRes) => {
+    caches.match(e.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(e.request).then((networkResponse) => {
         return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(e.request.url, fetchRes.clone());
-          return fetchRes;
+          cache.put(e.request, networkResponse.clone());
+          return networkResponse;
         });
-      }).catch(() => (
+      }).catch(() => {
       });
     })
   );
 });
-                                          
