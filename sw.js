@@ -1,27 +1,23 @@
-const CACHE_NAME = "tcg-cards-maker-v1";
+const CACHE_NAME = "tcg-maker-v4";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./image.png",
-  "./html-to-imagen.min.js", // Usamos tu archivo local
-  // Si usas la fuente local, descomenta la siguiente línea:
-  // "./matrixregularsmallcaps.ttf" 
-];
+  "./html-to-imagen.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
+  ];
 
-// Instalación del Service Worker
 self.addEventListener("install", (e) => {
-  self.skipWaiting(); // Forza al SW a activarse de inmediato
-  
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Cacheando archivos...");
+      console.log("Descargando archivos para modo offline...");
       return cache.addAll(ASSETS);
     })
   );
 });
 
-// Activación y limpieza de cachés viejos
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keys) => {
@@ -32,15 +28,22 @@ self.addEventListener("activate", (e) => {
       );
     })
   );
-  return self.clients.claim(); // Toma control de la página inmediatamente
+  return self.clients.claim();
 });
 
-// Estrategia: Cache First (Responder desde caché, si no existe, ir a internet)
 self.addEventListener("fetch", (e) => {
+  if (!e.request.url.startsWith('http')) return;
+
   e.respondWith(
     caches.match(e.request).then((res) => {
-      // Si está en caché, lo devuelve. Si no, lo pide a internet.
-      return res || fetch(e.request);
+      return res || fetch(e.request).then((fetchRes) => {
+        return caches.open(CACHE_NAME).then((cache) => {
+          cache.put(e.request.url, fetchRes.clone());
+          return fetchRes;
+        });
+      }).catch(() => (
+      });
     })
   );
 });
+                                          
