@@ -295,32 +295,24 @@
           z-index: -1;
           pointer-events: none;
         }
-
-        .card-border-overlay.rarity-oro::after,
-        .card-border-overlay.rarity-plata::after,
-        .card-border-overlay.rarity-comun::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          box-shadow:
-          inset 0 0 12px rgba(0,0,0,0.7),
-          0 0 18px rgba(0,0,0,0.25);
-          pointer-events: none;
-          z-index: 11;
-        }
-  
-        .card-border-overlay.rarity-oro::before,
-        .card-border-overlay.rarity-plata::before,
-        .card-border-overlay.rarity-comun::before {
-          content: "";
-          position: absolute;
-          inset: -4px;
-          background: var(--detail-accent);
-          opacity: 0.22;
-          filter: blur(14px);
-          z-index: 10;
-          pointer-events: none;
+        
+        .card-border-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('edd6bebda5bac8127f6a659689b988f9.jpg'); 
+            background-size: cover;
+            background-position: center;
+            padding: 8px; 
+            border-radius: 8px;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 10;
+            pointer-events: none;
+            transition: all 0.3s;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,0.5);
         }
 
         .controls, .library { 
